@@ -1,0 +1,918 @@
+// CampusOne Deterministic Mock Database Fixtures
+// High-fidelity academic datasets for development and testing
+
+import {
+  AcademicTerm,
+  Assessment,
+  AssessmentScore,
+  AttendanceRecord,
+  AuditLog,
+  ClassSession,
+  Course,
+  CourseOffering,
+  Department,
+  Enrollment,
+  ExemptionRequest,
+  ExemptionReview,
+  Notification,
+  Profile,
+  SyncRun,
+  TimetableEntry,
+} from "@/types/database";
+
+// 1. Departments
+export const mockDepartments: Department[] = [
+  {
+    id: "d1000000-0000-0000-0000-000000000001",
+    code: "CSE",
+    name: "Computer Science & Engineering",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+  {
+    id: "d1000000-0000-0000-0000-000000000002",
+    code: "ECE",
+    name: "Electronics & Communication Engineering",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+  {
+    id: "d1000000-0000-0000-0000-000000000003",
+    code: "MECH",
+    name: "Mechanical Engineering",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+];
+
+// 2. Profiles (Admin, Faculty, Students)
+export const mockProfiles: Profile[] = [
+  {
+    id: "a0000000-0000-0000-0000-000000000001",
+    college_id: "ADM001",
+    email: "admin@campusone.edu",
+    full_name: "Dr. Eleanor Vance",
+    role: "admin",
+    department_id: mockDepartments[0].id,
+    semester: null,
+    section: null,
+    phone: "+1-555-0199",
+    is_active: true,
+    avatar_url: null,
+    created_at: "2026-01-15T00:00:00Z",
+    updated_at: "2026-01-15T00:00:00Z",
+  },
+  {
+    id: "f0000000-0000-0000-0000-000000000001",
+    college_id: "FAC101",
+    email: "prof.sharma@campusone.edu",
+    full_name: "Prof. Rajesh Sharma",
+    role: "faculty",
+    department_id: mockDepartments[0].id,
+    semester: null,
+    section: null,
+    phone: "+1-555-0142",
+    is_active: true,
+    avatar_url: null,
+    created_at: "2026-01-15T00:00:00Z",
+    updated_at: "2026-01-15T00:00:00Z",
+  },
+  {
+    id: "f0000000-0000-0000-0000-000000000002",
+    college_id: "FAC102",
+    email: "dr.patel@campusone.edu",
+    full_name: "Dr. Ananya Patel",
+    role: "faculty",
+    department_id: mockDepartments[1].id,
+    semester: null,
+    section: null,
+    phone: "+1-555-0143",
+    is_active: true,
+    avatar_url: null,
+    created_at: "2026-01-15T00:00:00Z",
+    updated_at: "2026-01-15T00:00:00Z",
+  },
+  {
+    id: "s0000000-0000-0000-0000-000000000001",
+    college_id: "STU2024001",
+    email: "arjun.mehta@student.campusone.edu",
+    full_name: "Arjun Mehta",
+    role: "student",
+    department_id: mockDepartments[0].id,
+    semester: 6,
+    section: "A",
+    phone: "+1-555-0177",
+    is_active: true,
+    avatar_url: null,
+    created_at: "2026-02-01T00:00:00Z",
+    updated_at: "2026-02-01T00:00:00Z",
+  },
+  {
+    id: "s0000000-0000-0000-0000-000000000002",
+    college_id: "STU2024002",
+    email: "priya.singh@student.campusone.edu",
+    full_name: "Priya Singh",
+    role: "student",
+    department_id: mockDepartments[0].id,
+    semester: 6,
+    section: "A",
+    phone: "+1-555-0178",
+    is_active: true,
+    avatar_url: null,
+    created_at: "2026-02-01T00:00:00Z",
+    updated_at: "2026-02-01T00:00:00Z",
+  },
+  {
+    id: "s0000000-0000-0000-0000-000000000003",
+    college_id: "STU2024003",
+    email: "rohit.verma@student.campusone.edu",
+    full_name: "Rohit Verma",
+    role: "student",
+    department_id: mockDepartments[1].id,
+    semester: 4,
+    section: "B",
+    phone: "+1-555-0179",
+    is_active: true,
+    avatar_url: null,
+    created_at: "2026-02-01T00:00:00Z",
+    updated_at: "2026-02-01T00:00:00Z",
+  },
+];
+
+// 3. Academic Terms
+export const mockAcademicTerms: AcademicTerm[] = [
+  {
+    id: "t1000000-0000-0000-0000-000000000001",
+    name: "Fall 2026",
+    start_date: "2026-08-15",
+    end_date: "2026-12-20",
+    is_active: true,
+    created_at: "2026-07-01T00:00:00Z",
+    updated_at: "2026-07-01T00:00:00Z",
+  },
+  {
+    id: "t1000000-0000-0000-0000-000000000002",
+    name: "Spring 2026",
+    start_date: "2026-01-10",
+    end_date: "2026-05-25",
+    is_active: false,
+    created_at: "2025-12-01T00:00:00Z",
+    updated_at: "2026-05-26T00:00:00Z",
+  },
+];
+
+// 4. Courses
+export const mockCourses: Course[] = [
+  {
+    id: "c1000000-0000-0000-0000-000000000001",
+    code: "CS301",
+    title: "Data Structures & Algorithms",
+    department_id: mockDepartments[0].id,
+    credits: 4,
+    description: "Advanced data structures, algorithmic complexity, graph algorithms, and dynamic programming.",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+  {
+    id: "c1000000-0000-0000-0000-000000000002",
+    code: "CS302",
+    title: "Database Management Systems",
+    department_id: mockDepartments[0].id,
+    credits: 3,
+    description: "Relational database design, SQL, transaction processing, indexing, and distributed databases.",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+  {
+    id: "c1000000-0000-0000-0000-000000000003",
+    code: "CS303",
+    title: "Computer Networks & Security",
+    department_id: mockDepartments[0].id,
+    credits: 3,
+    description: "OSI and TCP/IP protocol architectures, routing protocols, TLS, and network security policies.",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+  {
+    id: "c1000000-0000-0000-0000-000000000004",
+    code: "EC201",
+    title: "Digital Signal Processing",
+    department_id: mockDepartments[1].id,
+    credits: 4,
+    description: "Discrete-time signals, Z-transform, DFT/FFT, FIR/IIR filter design and spectral analysis.",
+    created_at: "2026-01-10T00:00:00Z",
+    updated_at: "2026-01-10T00:00:00Z",
+  },
+];
+
+// 5. Course Offerings
+export const mockCourseOfferings: CourseOffering[] = [
+  {
+    id: "o1000000-0000-0000-0000-000000000001",
+    course_id: mockCourses[0].id,
+    course: mockCourses[0],
+    academic_term_id: mockAcademicTerms[0].id,
+    academic_term: mockAcademicTerms[0],
+    faculty_id: mockProfiles[1].id,
+    faculty: mockProfiles[1],
+    section: "A",
+    capacity: 60,
+    status: "active",
+    created_at: "2026-08-01T00:00:00Z",
+    updated_at: "2026-08-01T00:00:00Z",
+  },
+  {
+    id: "o1000000-0000-0000-0000-000000000002",
+    course_id: mockCourses[1].id,
+    course: mockCourses[1],
+    academic_term_id: mockAcademicTerms[0].id,
+    academic_term: mockAcademicTerms[0],
+    faculty_id: mockProfiles[1].id,
+    faculty: mockProfiles[1],
+    section: "A",
+    capacity: 60,
+    status: "active",
+    created_at: "2026-08-01T00:00:00Z",
+    updated_at: "2026-08-01T00:00:00Z",
+  },
+  {
+    id: "o1000000-0000-0000-0000-000000000003",
+    course_id: mockCourses[2].id,
+    course: mockCourses[2],
+    academic_term_id: mockAcademicTerms[0].id,
+    academic_term: mockAcademicTerms[0],
+    faculty_id: mockProfiles[1].id,
+    faculty: mockProfiles[1],
+    section: "A",
+    capacity: 55,
+    status: "active",
+    created_at: "2026-08-01T00:00:00Z",
+    updated_at: "2026-08-01T00:00:00Z",
+  },
+  {
+    id: "o1000000-0000-0000-0000-000000000004",
+    course_id: mockCourses[3].id,
+    course: mockCourses[3],
+    academic_term_id: mockAcademicTerms[0].id,
+    academic_term: mockAcademicTerms[0],
+    faculty_id: mockProfiles[2].id,
+    faculty: mockProfiles[2],
+    section: "B",
+    capacity: 50,
+    status: "active",
+    created_at: "2026-08-01T00:00:00Z",
+    updated_at: "2026-08-01T00:00:00Z",
+  },
+];
+
+// 6. Enrollments
+export const mockEnrollments: Enrollment[] = [
+  {
+    id: "e1000000-0000-0000-0000-000000000001",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    student_id: mockProfiles[3].id, // Arjun
+    student: mockProfiles[3],
+    status: "enrolled",
+    enrolled_at: "2026-08-10T00:00:00Z",
+    updated_at: "2026-08-10T00:00:00Z",
+  },
+  {
+    id: "e1000000-0000-0000-0000-000000000002",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    student_id: mockProfiles[3].id, // Arjun
+    student: mockProfiles[3],
+    status: "enrolled",
+    enrolled_at: "2026-08-10T00:00:00Z",
+    updated_at: "2026-08-10T00:00:00Z",
+  },
+  {
+    id: "e1000000-0000-0000-0000-000000000003",
+    course_offering_id: mockCourseOfferings[2].id,
+    course_offering: mockCourseOfferings[2],
+    student_id: mockProfiles[3].id, // Arjun
+    student: mockProfiles[3],
+    status: "enrolled",
+    enrolled_at: "2026-08-10T00:00:00Z",
+    updated_at: "2026-08-10T00:00:00Z",
+  },
+  {
+    id: "e1000000-0000-0000-0000-000000000004",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    student_id: mockProfiles[4].id, // Priya
+    student: mockProfiles[4],
+    status: "enrolled",
+    enrolled_at: "2026-08-10T00:00:00Z",
+    updated_at: "2026-08-10T00:00:00Z",
+  },
+  {
+    id: "e1000000-0000-0000-0000-000000000005",
+    course_offering_id: mockCourseOfferings[3].id,
+    course_offering: mockCourseOfferings[3],
+    student_id: mockProfiles[5].id, // Rohit
+    student: mockProfiles[5],
+    status: "enrolled",
+    enrolled_at: "2026-08-10T00:00:00Z",
+    updated_at: "2026-08-10T00:00:00Z",
+  },
+];
+
+// 7. Class Sessions
+export const mockClassSessions: ClassSession[] = [
+  // CS301 Sessions
+  {
+    id: "cs000001-0000-0000-0000-000000000001",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    session_date: "2026-10-05",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    topic: "Binary Search Trees & Balancing (AVL)",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-05T11:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-05T11:00:00Z",
+  },
+  {
+    id: "cs000001-0000-0000-0000-000000000002",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    session_date: "2026-10-07",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    topic: "Red-Black Trees & B-Trees",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-07T11:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-07T11:00:00Z",
+  },
+  {
+    id: "cs000001-0000-0000-0000-000000000003",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    session_date: "2026-10-12",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    topic: "Graph Traversal: BFS & DFS Applications",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-12T11:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-12T11:00:00Z",
+  },
+  {
+    id: "cs000001-0000-0000-0000-000000000004",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    session_date: "2026-10-14",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    topic: "Dijkstra and Bellman-Ford Shortest Paths",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-14T11:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-14T11:00:00Z",
+  },
+  {
+    id: "cs000001-0000-0000-0000-000000000005",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    session_date: "2026-10-16",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    topic: "Guest Lecture - Tech Symposium",
+    status: "cancelled", // Explicitly cancelled!
+    is_attendance_submitted: false,
+    attendance_submitted_at: null,
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-15T09:00:00Z",
+  },
+  {
+    id: "cs000001-0000-0000-0000-000000000006",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    session_date: "2026-10-19",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    topic: "Minimum Spanning Trees (Prim & Kruskal)",
+    status: "scheduled",
+    is_attendance_submitted: false,
+    attendance_submitted_at: null,
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-08-20T00:00:00Z",
+  },
+  // CS302 Sessions
+  {
+    id: "cs000002-0000-0000-0000-000000000001",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    session_date: "2026-10-06",
+    start_time: "11:00:00",
+    end_time: "12:30:00",
+    room: "Lab 3B",
+    topic: "Normalization: 1NF to BCNF",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-06T13:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-06T13:00:00Z",
+  },
+  {
+    id: "cs000002-0000-0000-0000-000000000002",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    session_date: "2026-10-08",
+    start_time: "11:00:00",
+    end_time: "12:30:00",
+    room: "Lab 3B",
+    topic: "ACID Properties & Concurrency Control",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-08T13:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-08T13:00:00Z",
+  },
+  {
+    id: "cs000002-0000-0000-0000-000000000003",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    session_date: "2026-10-13",
+    start_time: "11:00:00",
+    end_time: "12:30:00",
+    room: "Lab 3B",
+    topic: "B+ Tree Indexing in PostgreSQL",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-13T13:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-13T13:00:00Z",
+  },
+  {
+    id: "cs000002-0000-0000-0000-000000000004",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    session_date: "2026-10-15",
+    start_time: "11:00:00",
+    end_time: "12:30:00",
+    room: "Lab 3B",
+    topic: "Query Optimization & Execution Plans",
+    status: "completed",
+    is_attendance_submitted: true,
+    attendance_submitted_at: "2026-10-15T13:00:00Z",
+    created_at: "2026-08-20T00:00:00Z",
+    updated_at: "2026-10-15T13:00:00Z",
+  },
+];
+
+// 8. Attendance Records
+export const mockAttendanceRecords: AttendanceRecord[] = [
+  // Arjun (student 1) in CS301:
+  // Session 1: Present
+  {
+    id: "att00001-0000-0000-0000-000000000001",
+    class_session_id: mockClassSessions[0].id,
+    student_id: mockProfiles[3].id,
+    status: "present",
+    remarks: "On time",
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-05T10:35:00Z",
+    updated_at: "2026-10-05T10:35:00Z",
+  },
+  // Session 2: Late
+  {
+    id: "att00001-0000-0000-0000-000000000002",
+    class_session_id: mockClassSessions[1].id,
+    student_id: mockProfiles[3].id,
+    status: "late",
+    remarks: "Joined at 09:15 AM",
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-07T10:35:00Z",
+    updated_at: "2026-10-07T10:35:00Z",
+  },
+  // Session 3: Absent (Will be covered by approved exemption!)
+  {
+    id: "att00001-0000-0000-0000-000000000003",
+    class_session_id: mockClassSessions[2].id,
+    student_id: mockProfiles[3].id,
+    status: "absent",
+    remarks: "Not in lecture hall",
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-12T10:35:00Z",
+    updated_at: "2026-10-12T10:35:00Z",
+  },
+  // Session 4: Present
+  {
+    id: "att00001-0000-0000-0000-000000000004",
+    class_session_id: mockClassSessions[3].id,
+    student_id: mockProfiles[3].id,
+    status: "present",
+    remarks: null,
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-14T10:35:00Z",
+    updated_at: "2026-10-14T10:35:00Z",
+  },
+
+  // Arjun in CS302:
+  // Session 1: Present
+  {
+    id: "att00001-0000-0000-0000-000000000005",
+    class_session_id: mockClassSessions[6].id,
+    student_id: mockProfiles[3].id,
+    status: "present",
+    remarks: null,
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-06T12:35:00Z",
+    updated_at: "2026-10-06T12:35:00Z",
+  },
+  // Session 2: Present
+  {
+    id: "att00001-0000-0000-0000-000000000006",
+    class_session_id: mockClassSessions[7].id,
+    student_id: mockProfiles[3].id,
+    status: "present",
+    remarks: null,
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-08T12:35:00Z",
+    updated_at: "2026-10-08T12:35:00Z",
+  },
+  // Session 3: Present
+  {
+    id: "att00001-0000-0000-0000-000000000007",
+    class_session_id: mockClassSessions[8].id,
+    student_id: mockProfiles[3].id,
+    status: "present",
+    remarks: null,
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-13T12:35:00Z",
+    updated_at: "2026-10-13T12:35:00Z",
+  },
+  // Session 4: Absent (Pending exemption!)
+  {
+    id: "att00001-0000-0000-0000-000000000008",
+    class_session_id: mockClassSessions[9].id,
+    student_id: mockProfiles[3].id,
+    status: "absent",
+    remarks: null,
+    marked_by: mockProfiles[1].id,
+    marked_at: "2026-10-15T12:35:00Z",
+    updated_at: "2026-10-15T12:35:00Z",
+  },
+];
+
+// 9. Assessments
+export const mockAssessments: Assessment[] = [
+  {
+    id: "asm00001-0000-0000-0000-000000000001",
+    course_offering_id: mockCourseOfferings[0].id,
+    title: "Quiz 1: Asymptotic Analysis & Binary Trees",
+    assessment_type: "quiz",
+    max_marks: 20,
+    weightage: 10,
+    due_date: "2026-09-25T18:00:00Z",
+    is_published: true, // Published
+    published_at: "2026-09-26T10:00:00Z",
+    created_by: mockProfiles[1].id,
+    created_at: "2026-09-15T00:00:00Z",
+    updated_at: "2026-09-26T10:00:00Z",
+  },
+  {
+    id: "asm00001-0000-0000-0000-000000000002",
+    course_offering_id: mockCourseOfferings[0].id,
+    title: "Quiz 2: Graph Algorithms & Heaps",
+    assessment_type: "quiz",
+    max_marks: 25,
+    weightage: 15,
+    due_date: "2026-10-10T18:00:00Z",
+    is_published: true, // Published
+    published_at: "2026-10-11T12:00:00Z",
+    created_by: mockProfiles[1].id,
+    created_at: "2026-10-01T00:00:00Z",
+    updated_at: "2026-10-11T12:00:00Z",
+  },
+  {
+    id: "asm00001-0000-0000-0000-000000000003",
+    course_offering_id: mockCourseOfferings[0].id,
+    title: "Midterm Examination",
+    assessment_type: "midterm",
+    max_marks: 50,
+    weightage: 30,
+    due_date: "2026-10-25T10:00:00Z",
+    is_published: false, // DRAFT / UNPUBLISHED! Students must NOT see scores yet
+    published_at: null,
+    created_by: mockProfiles[1].id,
+    created_at: "2026-10-10T00:00:00Z",
+    updated_at: "2026-10-10T00:00:00Z",
+  },
+  {
+    id: "asm00001-0000-0000-0000-000000000004",
+    course_offering_id: mockCourseOfferings[1].id,
+    title: "Quiz 1: Relational Algebra & SQL",
+    assessment_type: "quiz",
+    max_marks: 25,
+    weightage: 10,
+    due_date: "2026-09-28T18:00:00Z",
+    is_published: true, // Published
+    published_at: "2026-09-29T14:00:00Z",
+    created_by: mockProfiles[1].id,
+    created_at: "2026-09-20T00:00:00Z",
+    updated_at: "2026-09-29T14:00:00Z",
+  },
+];
+
+// 10. Assessment Scores
+export const mockAssessmentScores: AssessmentScore[] = [
+  // Arjun's scores
+  {
+    id: "sc000001-0000-0000-0000-000000000001",
+    assessment_id: mockAssessments[0].id, // CS301 Quiz 1
+    student_id: mockProfiles[3].id, // Arjun
+    marks_obtained: 18.5,
+    remarks: "Excellent tree rotation implementation.",
+    graded_by: mockProfiles[1].id,
+    graded_at: "2026-09-26T09:30:00Z",
+    created_at: "2026-09-26T09:30:00Z",
+    updated_at: "2026-09-26T09:30:00Z",
+  },
+  {
+    id: "sc000001-0000-0000-0000-000000000002",
+    assessment_id: mockAssessments[1].id, // CS301 Quiz 2
+    student_id: mockProfiles[3].id, // Arjun
+    marks_obtained: 22.0,
+    remarks: "Good work on Dijkstra priority queue.",
+    graded_by: mockProfiles[1].id,
+    graded_at: "2026-10-11T11:30:00Z",
+    created_at: "2026-10-11T11:30:00Z",
+    updated_at: "2026-10-11T11:30:00Z",
+  },
+  {
+    id: "sc000001-0000-0000-0000-000000000003",
+    assessment_id: mockAssessments[2].id, // CS301 Midterm (Unpublished)
+    student_id: mockProfiles[3].id, // Arjun
+    marks_obtained: 44.0,
+    remarks: "Strong theoretical grasp.",
+    graded_by: mockProfiles[1].id,
+    graded_at: "2026-10-18T16:00:00Z",
+    created_at: "2026-10-18T16:00:00Z",
+    updated_at: "2026-10-18T16:00:00Z",
+  },
+  {
+    id: "sc000001-0000-0000-0000-000000000004",
+    assessment_id: mockAssessments[3].id, // CS302 Quiz 1
+    student_id: mockProfiles[3].id, // Arjun
+    marks_obtained: 23.5,
+    remarks: "Clean subquery formulation.",
+    graded_by: mockProfiles[1].id,
+    graded_at: "2026-09-29T13:30:00Z",
+    created_at: "2026-09-29T13:30:00Z",
+    updated_at: "2026-09-29T13:30:00Z",
+  },
+  // Priya's score (Must NOT be visible to Arjun)
+  {
+    id: "sc000001-0000-0000-0000-000000000005",
+    assessment_id: mockAssessments[0].id,
+    student_id: mockProfiles[4].id, // Priya
+    marks_obtained: 19.5,
+    remarks: "Perfect AVL tree proof.",
+    graded_by: mockProfiles[1].id,
+    graded_at: "2026-09-26T09:40:00Z",
+    created_at: "2026-09-26T09:40:00Z",
+    updated_at: "2026-09-26T09:40:00Z",
+  },
+];
+
+// 11. Exemption Requests
+export const mockExemptionRequests: ExemptionRequest[] = [
+  // Exemption 1: Approved for CS301 Session 3 (2026-10-12)
+  {
+    id: "ex000001-0000-0000-0000-000000000001",
+    student_id: mockProfiles[3].id, // Arjun
+    student: mockProfiles[3],
+    class_session_id: mockClassSessions[2].id, // CS301 Oct 12
+    class_session: mockClassSessions[2],
+    reason: "Represented university at Inter-College Hackathon finals. Certificate attached.",
+    document_url: "exemption-documents/s0000000-0000-0000-0000-000000000001/hackathon_certificate.pdf",
+    document_filename: "hackathon_certificate.pdf",
+    status: "approved",
+    submitted_at: "2026-10-12T14:00:00Z",
+    updated_at: "2026-10-13T10:15:00Z",
+  },
+  // Exemption 2: Pending for CS302 Session 4 (2026-10-15)
+  {
+    id: "ex000001-0000-0000-0000-000000000002",
+    student_id: mockProfiles[3].id, // Arjun
+    student: mockProfiles[3],
+    class_session_id: mockClassSessions[9].id, // CS302 Oct 15
+    class_session: mockClassSessions[9],
+    reason: "Severe viral fever with medical prescription and hospital certificate attached.",
+    document_url: "exemption-documents/s0000000-0000-0000-0000-000000000001/medical_cert_oct15.pdf",
+    document_filename: "medical_cert_oct15.pdf",
+    status: "pending",
+    submitted_at: "2026-10-16T08:30:00Z",
+    updated_at: "2026-10-16T08:30:00Z",
+  },
+];
+
+// 12. Exemption Reviews
+export const mockExemptionReviews: ExemptionReview[] = [
+  {
+    id: "rev00001-0000-0000-0000-000000000001",
+    exemption_request_id: mockExemptionRequests[0].id,
+    reviewer_id: mockProfiles[1].id, // Prof. Sharma
+    reviewer: mockProfiles[1],
+    action: "approved",
+    comments: "Official college delegation approved by Dean. Attendance granted as excused.",
+    created_at: "2026-10-13T10:15:00Z",
+  },
+];
+
+// 13. Timetable Entries
+export const mockTimetableEntries: TimetableEntry[] = [
+  {
+    id: "tt000001-0000-0000-0000-000000000001",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    day_of_week: "monday",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    effective_start_date: "2026-08-15",
+    effective_end_date: "2026-12-20",
+    created_at: "2026-08-05T00:00:00Z",
+    updated_at: "2026-08-05T00:00:00Z",
+  },
+  {
+    id: "tt000001-0000-0000-0000-000000000002",
+    course_offering_id: mockCourseOfferings[0].id,
+    course_offering: mockCourseOfferings[0],
+    day_of_week: "wednesday",
+    start_time: "09:00:00",
+    end_time: "10:30:00",
+    room: "Auditorium A-201",
+    effective_start_date: "2026-08-15",
+    effective_end_date: "2026-12-20",
+    created_at: "2026-08-05T00:00:00Z",
+    updated_at: "2026-08-05T00:00:00Z",
+  },
+  {
+    id: "tt000001-0000-0000-0000-000000000003",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    day_of_week: "tuesday",
+    start_time: "11:00:00",
+    end_time: "12:30:00",
+    room: "Lab 3B",
+    effective_start_date: "2026-08-15",
+    effective_end_date: "2026-12-20",
+    created_at: "2026-08-05T00:00:00Z",
+    updated_at: "2026-08-05T00:00:00Z",
+  },
+  {
+    id: "tt000001-0000-0000-0000-000000000004",
+    course_offering_id: mockCourseOfferings[1].id,
+    course_offering: mockCourseOfferings[1],
+    day_of_week: "thursday",
+    start_time: "11:00:00",
+    end_time: "12:30:00",
+    room: "Lab 3B",
+    effective_start_date: "2026-08-15",
+    effective_end_date: "2026-12-20",
+    created_at: "2026-08-05T00:00:00Z",
+    updated_at: "2026-08-05T00:00:00Z",
+  },
+  {
+    id: "tt000001-0000-0000-0000-000000000005",
+    course_offering_id: mockCourseOfferings[2].id,
+    course_offering: mockCourseOfferings[2],
+    day_of_week: "friday",
+    start_time: "14:00:00",
+    end_time: "15:30:00",
+    room: "Room 104",
+    effective_start_date: "2026-08-15",
+    effective_end_date: "2026-12-20",
+    created_at: "2026-08-05T00:00:00Z",
+    updated_at: "2026-08-05T00:00:00Z",
+  },
+];
+
+// 14. Notifications
+export const mockNotifications: Notification[] = [
+  {
+    id: "notif001-0000-0000-0000-000000000001",
+    user_id: mockProfiles[3].id, // Arjun
+    title: "Quiz 2 Scores Published",
+    message: "Prof. Sharma published scores for CS301 Quiz 2 (Graph Algorithms & Heaps). You scored 22/25.",
+    type: "assessment",
+    is_read: false,
+    link: "/student/assessments",
+    created_at: "2026-10-11T12:05:00Z",
+  },
+  {
+    id: "notif001-0000-0000-0000-000000000002",
+    user_id: mockProfiles[3].id, // Arjun
+    title: "Exemption Request Approved",
+    message: "Your attendance exemption for CS301 (Oct 12) has been approved by Prof. Sharma.",
+    type: "exemption",
+    is_read: true,
+    link: "/student/exemptions",
+    created_at: "2026-10-13T10:16:00Z",
+  },
+  {
+    id: "notif001-0000-0000-0000-000000000003",
+    user_id: mockProfiles[3].id, // Arjun
+    title: "Lecture Rescheduled: CS301",
+    message: "Tomorrow's lecture on Minimum Spanning Trees is moved to Auditorium A-201 at 09:00 AM.",
+    type: "timetable",
+    is_read: false,
+    link: "/student/timetable",
+    created_at: "2026-10-18T14:30:00Z",
+  },
+  {
+    id: "notif001-0000-0000-0000-000000000004",
+    user_id: mockProfiles[1].id, // Prof. Sharma
+    title: "New Exemption Request Submitted",
+    message: "Arjun Mehta submitted an exemption request for CS302 session on Oct 15.",
+    type: "exemption",
+    is_read: false,
+    link: "/faculty/exemptions",
+    created_at: "2026-10-16T08:31:00Z",
+  },
+];
+
+// 15. Audit Logs
+export const mockAuditLogs: AuditLog[] = [
+  {
+    id: "aud00001-0000-0000-0000-000000000001",
+    actor_id: mockProfiles[1].id,
+    actor: mockProfiles[1],
+    action: "MARKS_PUBLISHED",
+    entity_type: "assessment",
+    entity_id: mockAssessments[1].id,
+    old_values: { is_published: false },
+    new_values: { is_published: true, published_at: "2026-10-11T12:00:00Z" },
+    ip_address: "192.168.1.101",
+    created_at: "2026-10-11T12:00:00Z",
+  },
+  {
+    id: "aud00001-0000-0000-0000-000000000002",
+    actor_id: mockProfiles[1].id,
+    actor: mockProfiles[1],
+    action: "EXEMPTION_APPROVED",
+    entity_type: "exemption_request",
+    entity_id: mockExemptionRequests[0].id,
+    old_values: { status: "pending" },
+    new_values: { status: "approved", comments: "Official college delegation approved by Dean." },
+    ip_address: "192.168.1.101",
+    created_at: "2026-10-13T10:15:00Z",
+  },
+  {
+    id: "aud00001-0000-0000-0000-000000000003",
+    actor_id: mockProfiles[0].id,
+    actor: mockProfiles[0],
+    action: "ROLE_PROVISIONED",
+    entity_type: "profile",
+    entity_id: mockProfiles[2].id,
+    old_values: { role: "faculty", is_active: false },
+    new_values: { role: "faculty", is_active: true },
+    ip_address: "192.168.1.5",
+    created_at: "2026-10-14T09:00:00Z",
+  },
+];
+
+// 16. Sync Runs
+export const mockSyncRuns: SyncRun[] = [
+  {
+    id: "sync0001-0000-0000-0000-000000000001",
+    source_system: "campusone-sis",
+    sync_type: "full",
+    status: "completed",
+    records_processed: 65,
+    records_succeeded: 65,
+    records_failed: 0,
+    error_summary: null,
+    started_at: "2026-10-18T03:00:00Z",
+    completed_at: "2026-10-18T03:01:25Z",
+  },
+  {
+    id: "sync0001-0000-0000-0000-000000000002",
+    source_system: "campusone-sis",
+    sync_type: "attendance",
+    status: "partial",
+    records_processed: 48,
+    records_succeeded: 46,
+    records_failed: 2,
+    error_summary: "Duplicate biometric scan timestamps for Section B student IDs",
+    started_at: "2026-10-17T18:00:00Z",
+    completed_at: "2026-10-17T18:00:45Z",
+  },
+];
